@@ -4,10 +4,12 @@ import { useStyles } from './style';
 interface NormalContainerProps {
   children: any;
   full?: boolean;
+  className?: string;
 }
 export const NormalContainer: FC<NormalContainerProps> = ({
   full,
   children,
+  className,
 }) => {
   const classes = useStyles();
   const isFull = full
@@ -15,7 +17,9 @@ export const NormalContainer: FC<NormalContainerProps> = ({
     : classes.normalContainer;
   return (
     <>
-      <div className={`${classes.customContainer} ${isFull}`}>
+      <div
+        className={`${classes.customContainer} ${isFull} ${className} `}
+      >
         {children}
       </div>
     </>

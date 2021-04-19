@@ -1,27 +1,24 @@
-import { createStyles, makeStyles } from '@material-ui/core';
-import {
-  CustomHead,
-  NormalContainer,
-  SlideItem,
-  SlideShow,
-} from '../components/utils';
-import styles from '../styles/Home.module.css';
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      '& .mahady-slideshow-item .inner': {
-        width: '100%',
-        height: 100,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#ccc',
-      },
-    },
-  }),
-);
+import React, { useState, useEffect } from 'react';
+import { CustomHead, NormalContainer } from '../components/utils';
+import { useStyles } from '../styles/style';
 export default function Home() {
   const classes = useStyles();
+  const [index, setIndex] = useState(1);
+  const [dur, setDur] = useState('');
+
+  const Prev = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setDur('.5s');
+    setIndex((prev) => (prev === 1 ? 4 : prev - 1));
+  };
+  const Next = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setDur('.5s');
+    setIndex((prev) => (prev === 4 ? 1 : prev + 1));
+  };
+  useEffect(() => {
+    setTimeout(() => setDur(''), 300);
+  }, [index]);
   return (
     <>
       <div>
@@ -30,26 +27,60 @@ export default function Home() {
           descriptionContent="Description content"
         />
       </div>
-      <main className={styles.main}>
-        <NormalContainer>
+      <main>
+        <NormalContainer className={classes.root}>
           <div>
-            <h1>Test</h1>
-            <div className={classes.root}>
-              <SlideShow>
-                <SlideItem index={1}>
-                  <div className="inner">Slide 1</div>
-                </SlideItem>
-                <SlideItem index={2}>
-                  <div className="inner">Slide 2</div>
-                </SlideItem>
-                <SlideItem index={3}>
-                  <div className="inner">Slide 3</div>
-                </SlideItem>
-                <SlideItem index={4}>
-                  <div className="inner">Slide 4</div>
-                </SlideItem>
-              </SlideShow>
+            <h1>This will work smoothly</h1>
+          </div>
+          <div className={classes.container}>
+            <div
+              className={classes.wrapper}
+              style={{
+                transform: `translate3d(${-index * 100}px,0,0)`,
+                transition: `${dur}`,
+              }}
+            >
+              <div
+                className={classes.item}
+                style={{ background: '#f00' }}
+              >
+                Slide item 4 clone
+              </div>
+              <div
+                className={classes.item}
+                style={{ background: '#000' }}
+              >
+                Slide item 1
+              </div>
+              <div
+                className={classes.item}
+                style={{ background: 'rgb(38 86 45)' }}
+              >
+                Slide item 2
+              </div>
+              <div
+                className={classes.item}
+                style={{ background: 'rgb(86 81 38)' }}
+              >
+                Slide item 3
+              </div>
+              <div
+                className={classes.item}
+                style={{ background: '#f00' }}
+              >
+                Slide item 4
+              </div>
+              <div
+                className={classes.item}
+                style={{ background: '#000' }}
+              >
+                Slide item 1 clone
+              </div>
             </div>
+          </div>
+          <div>
+            <button onClick={Prev}>Prev</button>
+            <button onClick={Next}>Next</button>
           </div>
         </NormalContainer>
       </main>
