@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CustomHead, NormalContainer } from '../components/utils';
 import { useStyles } from '../styles/style';
+
 export default function Home() {
   const classes = useStyles();
   const [index, setIndex] = useState(1);
